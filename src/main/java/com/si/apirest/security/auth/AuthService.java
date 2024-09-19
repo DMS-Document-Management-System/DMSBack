@@ -40,6 +40,7 @@ public class AuthService {
             throw new PersonExistException("This user already exist mr presidente.");
         }
         Person user = Person.builder()
+        .nombre(request.getNombre())
         .usuario(request.getUsername())
         .contraseña(passwordEncoder.encode(request.getPassword()))
         .role(RoleEntity.builder().id(2).build())

@@ -14,6 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
+    @NotEmpty(message = "El campo nombre no puede ser nulo.")
+    @NotNull(message = "El campo nombre no puede ser nulo.")
+    @NotBlank(message = "El campo nombre no puede estar vacio.")
+    private String nombre;
+
     @NotEmpty(message = "El campo usuario no puede ser nulo.")
     @NotNull(message = "El campo usuario no puede ser nulo.")
     @NotBlank(message = "El campo usuario no puede estar vacio.")

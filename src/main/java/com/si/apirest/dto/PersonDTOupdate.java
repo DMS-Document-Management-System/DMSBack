@@ -8,7 +8,4 @@ public class PersonDTOupdate {
 
     private String usuario;
     
-    private String email;
-
-    private String direccion;
 }

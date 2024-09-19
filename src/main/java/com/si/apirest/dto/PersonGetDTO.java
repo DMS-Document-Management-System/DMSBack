@@ -11,10 +11,6 @@ public class PersonGetDTO {
     private String nombre;
 
     private String usuario;
-    
-    private String email;
-
-    private String direccion;
 
     private boolean enabled;
 

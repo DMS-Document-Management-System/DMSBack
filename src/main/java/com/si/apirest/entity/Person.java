@@ -35,6 +35,8 @@ public class Person implements UserDetails {
     @GeneratedValue
     private int id;
     
+    private String nombre;
+
     private String usuario;
 
     private String contraseña;
