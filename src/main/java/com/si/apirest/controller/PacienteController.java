@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
@@ -23,7 +24,7 @@ public class PacienteController {
     private final PacienteService pacienteService;
 
     @PostMapping
-    public Paciente createPaciente(PacienteDTO pacienteDTO) {
+    public Paciente createPaciente(@RequestBody PacienteDTO pacienteDTO) {
         return pacienteService.savePaciente(pacienteDTO);
     }
 
