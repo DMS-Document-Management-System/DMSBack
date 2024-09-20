@@ -42,13 +42,18 @@ public class PacienteService {
         return pacienteDocDTO;
     }
 
-    public void updatePaciente(Paciente paciente) {
-        pacienteRepository.save(paciente);
+    public void updatePaciente(PacienteDTO paciente) {
+        Paciente pacienteEntity = modelMapper.map(paciente, Paciente.class);
+        pacienteRepository.save(pacienteEntity);
     }
 
     public List<PacienteDTO> getPacientes() {
         return pacienteRepository.findAll().stream()
         .map(paciente -> modelMapper.map(paciente, PacienteDTO.class)).toList();
+    }
+
+    public void deletePaciente(int id) {
+        pacienteRepository.deleteById(id);
     }
 
 }
