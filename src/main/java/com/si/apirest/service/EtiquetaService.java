@@ -4,13 +4,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.si.apirest.dto.EtiquetaDTO;
+import com.si.apirest.dto.EtiquetaDocs;
+import com.si.apirest.dto.EtiquetaReturnDTO;
 import com.si.apirest.entity.Documento;
 import com.si.apirest.entity.Etiqueta;
 import com.si.apirest.exceptions.NotFoundException;
+import com.si.apirest.projection.EtiquetaView;
 import com.si.apirest.repository.DocumentoRepository;
 import com.si.apirest.repository.EtiquetaRepository;
 
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -26,20 +28,21 @@ public class EtiquetaService {
     
     private final ModelMapper modelMapper;
 
-    public Etiqueta createEtiqueta(EtiquetaDTO etiquetaDTO) {
+    public EtiquetaReturnDTO createEtiqueta(EtiquetaDTO etiquetaDTO) {
         Etiqueta etiqueta = modelMapper.map(etiquetaDTO, Etiqueta.class);
-        return etiquetaRepository.save(etiqueta);
+        return modelMapper.map(etiquetaRepository.save(etiqueta), EtiquetaReturnDTO.class);
     }
 
-    public Etiqueta getEtiquetaById(int id) {
-        return etiquetaRepository.findById(id).orElse(null);
+    public EtiquetaDocs getEtiquetaById(int id) {
+        Etiqueta etiqueta = etiquetaRepository.findById(id).orElseThrow(()->new NotFoundException("Etiqueta not found."));
+        return modelMapper.map(etiqueta, EtiquetaDocs.class);
     }
 
-    public Iterable<Etiqueta> getAllEtiquetas() {
-        return etiquetaRepository.findAll();
+    public Iterable<EtiquetaView> getAllEtiquetas() {
+        return etiquetaRepository.findAllProjectedBy();
     }
 
-    public Etiqueta addDocumentoToEtiqueta(int etiquetaId, int documentoId) {
+    public EtiquetaDocs addDocumentoToEtiqueta(int etiquetaId, int documentoId) {
         Etiqueta etiqueta = etiquetaRepository.findById(etiquetaId).orElseThrow(
             () -> new NotFoundException("Etiqueta not found.")
         );
@@ -47,7 +50,7 @@ public class EtiquetaService {
             () -> new NotFoundException("documento not found.")
         );
         etiqueta.getDocumentos().add(documento);
-        return etiquetaRepository.save(etiqueta);
+        return modelMapper.map(etiquetaRepository.save(etiqueta), EtiquetaDocs.class);
     }
 
     public void removeDocumentFromEtiqueta(int etiquetaId, int documentoId) {
@@ -60,29 +63,22 @@ public class EtiquetaService {
         etiqueta.getDocumentos().remove(documento);
     }
 
-    @Transactional
-    public Etiqueta addEtiquetaToDocument(int etiquetaId, List<Integer> documentoIds) {
-        Etiqueta etiqueta = etiquetaRepository.findById(etiquetaId).orElseThrow(
-            () -> new NotFoundException("Etiqueta not found.")
-        );
-        List<Documento> documentos = documentoRepository.findAllById(documentoIds);
-        etiqueta.getDocumentos().addAll(documentos);
-        return etiquetaRepository.save(etiqueta);
-    }
-
-    @Transactional
-    public Etiqueta updateDocumentoOfEtiqueta(int etiquetaId, List<Integer> documentoIds) {
-        Etiqueta etiqueta = etiquetaRepository.findById(etiquetaId).orElseThrow(
-            () -> new NotFoundException("Etiqueta not found.")
-        );
-        etiqueta.getDocumentos().clear();
-        List<Documento> documentos = documentoRepository.findAllById(documentoIds);
-        etiqueta.getDocumentos().addAll(documentos);
-        return etiquetaRepository.save(etiqueta);
-    }
-
     public void deleteEtiqueta(int id) {
         etiquetaRepository.deleteById(id);
     }
+
+    public EtiquetaReturnDTO updateEtiqueta(int id, EtiquetaDTO etiquetaDTO) {
+        Etiqueta existingEtiqueta = etiquetaRepository.findById(id).orElseThrow(
+            () -> new NotFoundException("Etiqueta not found.")
+        );
+        existingEtiqueta.setNombre(etiquetaDTO.getNombre());
+        return modelMapper.map(etiquetaRepository.save(existingEtiqueta), EtiquetaReturnDTO.class);
+    }
+
+    public List<EtiquetaView> getEtiquetasByDocumentoId(int documentoId) {
+        return etiquetaRepository.findByDocumentosId(documentoId);
+    }
+
+
 
 }
