@@ -72,7 +72,6 @@ public class DocumentoService {
                 .collect(Collectors.toList());
     }
 
-    
     @Transactional
     public DocEtiquetasDTO addEtiquetaToDocument(DocEtiquetaPostDTO docEtiquetasDTO) {
         List<Etiqueta> etiquetas = docEtiquetasDTO.getEtiquetas().stream().map(

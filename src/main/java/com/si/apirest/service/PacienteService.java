@@ -56,4 +56,9 @@ public class PacienteService {
         pacienteRepository.deleteById(id);
     }
 
+    public List<DocumentoDTO> getDocumentosByPaciente(int idPaciente) {
+        PacienteDocDTO paciente = getPaciente(idPaciente);
+        return paciente.getDocumentos();
+    }
+
 }
