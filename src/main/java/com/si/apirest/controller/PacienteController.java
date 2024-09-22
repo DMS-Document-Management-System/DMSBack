@@ -56,9 +56,9 @@ public class PacienteController {
     }
 
     @Operation(summary = "Documentos del paciente", description = "Dado un id de paciente obtiene una Lista de los documentos asociados a él.")
-    @GetMapping("/{idPaciente}")
-    public List<DocumentoDTO> getDocumentosByPaciente(@PathVariable int idPaciente) {
-        return pacienteService.getDocumentosByPaciente(idPaciente);
+    @GetMapping("/{id}/documentos")
+    public List<DocumentoDTO> getDocumentosByPaciente(@PathVariable int id) {
+        return pacienteService.getDocumentosByPaciente(id);
     }
 
 }

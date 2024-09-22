@@ -29,7 +29,7 @@ public class DocumentoController {
     private final DocumentoService documentoService;
 
     @PostMapping
-    @Operation(summary = "Crear documento con etiquetas",
+    @Operation(summary = "Crear documento",
         requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody( // Usamos el alias para Swagger
             description = "En el post el campo id no es necesario. Tiene 2 opciones: "+
             "\n1. Puede eliminar el campo \"id\": 0"+

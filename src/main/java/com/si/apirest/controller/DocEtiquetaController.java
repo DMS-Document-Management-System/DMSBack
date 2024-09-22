@@ -10,6 +10,8 @@ import com.si.apirest.service.DocumentoService;
 import com.si.apirest.service.EtiquetaService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -34,12 +36,41 @@ public class DocEtiquetaController {
     private final DocumentoService documentoService;
 
 
-    
+    @Operation(summary = "Reemplazar etiquetas de documento", description = "Elimina las anteriores etiquetas y reemplaza las etiquetas asociadas a un documento.\n Enviar la id del documento como indica el ejemplo",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                description = "Cuerpo de la solicitud para actualizar las etiquetas de un documento",
+                required = true,
+                content = @Content(
+                        mediaType = "application/json",
+                        examples = @ExampleObject(
+                                value = """
+                                        {
+                                          "id": 0,
+                                          "etiquetas": [
+                                            {
+                                              "id": "1"
+                                            }
+                                          ]
+                                        }
+                                        """
+                        )
+                )
+        )
+    )
     @PutMapping("/documentos/etiquetas")
     public DocEtiquetasDTO addEtiquetaToDocument(@RequestBody DocEtiquetaPostDTO docEtiquetasDTO) {
         return documentoService.addEtiquetaToDocument(docEtiquetasDTO);
     }
 
+    @Operation(summary = "Crear documento con etiquetas",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody( // Usamos el alias para Swagger
+            description = "En el post el campo id no es necesario. Tiene 2 opciones: "+
+            "\n1. Puede eliminar el campo \"id\": 0"+
+            "\n2. Puede dejar el campo con el \"id\": 0"
+            , required = true, 
+            content = @Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DocEtiquetaPostDTO.class))
+        )
+    )
     @PostMapping("/documentos/etiquetas")
     public DocEtiquetasDTO createDocumentoEtiquetas(@RequestBody DocEtiquetaPostDTO docEtiquetasDTO) {
         return documentoService.createDocumentoEtiquetas(docEtiquetasDTO);
