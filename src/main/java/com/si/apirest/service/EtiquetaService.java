@@ -61,6 +61,7 @@ public class EtiquetaService {
             () -> new NotFoundException("documento not found.")
         );
         etiqueta.getDocumentos().remove(documento);
+        etiquetaRepository.save(etiqueta);
     }
 
     public void deleteEtiqueta(int id) {

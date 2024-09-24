@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.si.apirest.dto.DocEtiquetaPostDTO;
 import com.si.apirest.dto.DocEtiquetasDTO;
+import com.si.apirest.dto.DocEtiquetasId;
 import com.si.apirest.dto.DocumentoDTO;
 import com.si.apirest.dto.EtiquetaReturnDTO;
 import com.si.apirest.dto.PersonDTO;
@@ -99,10 +100,8 @@ public class DocumentoService {
     }
 
     @Transactional
-    public DocEtiquetasDTO createDocumentoEtiquetas(DocEtiquetaPostDTO docEtiquetasDTO) {
-        List<Etiqueta> etiquetas = docEtiquetasDTO.getEtiquetas().stream().map(
-            etiquetaDTO -> modelMapper.map(etiquetaDTO, Etiqueta.class)
-        ).collect(Collectors.toList());        
+    public DocEtiquetasDTO createDocumentoEtiquetas(DocEtiquetasId docEtiquetasDTO) {
+        List<Etiqueta> etiquetas = etiquetaRepository.findAllById(docEtiquetasDTO.getEtiquetas());
 
         Documento documento = createDocumentos(docEtiquetasDTO);
         documento.setPaciente(modelMapper.map(docEtiquetasDTO.getPaciente(), Paciente.class));
@@ -117,7 +116,17 @@ public class DocumentoService {
 
         etiquetaRepository.saveAll(etiquetas);
 
-        return docEtiquetasDTO;
+        List<EtiquetaReturnDTO> etiquetaReturnDTOs = etiquetas.stream().map(etiqueta -> modelMapper.map(etiqueta, EtiquetaReturnDTO.class)).collect(Collectors.toList());
+
+        DocEtiquetasDTO docEtiquetas = new DocEtiquetasDTO();
+
+        docEtiquetas.setEtiquetas(etiquetaReturnDTOs);
+        docEtiquetas.setArchivoUrl(docSaved.getArchivoUrl());
+        docEtiquetas.setDescripcion(docSaved.getDescripcion());
+        docEtiquetas.setTitulo(docSaved.getTitulo());
+        docEtiquetas.setId(docSaved.getId());
+
+        return docEtiquetas;
     }
 
     public DocEtiquetasDTO getDocumentoById(int id) {

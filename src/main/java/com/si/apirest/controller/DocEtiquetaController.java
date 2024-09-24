@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.si.apirest.dto.DocEtiquetaPostDTO;
 import com.si.apirest.dto.DocEtiquetasDTO;
+import com.si.apirest.dto.DocEtiquetasId;
 import com.si.apirest.dto.EtiquetaDocs;
 import com.si.apirest.projection.EtiquetaView;
 import com.si.apirest.service.DocumentoService;
@@ -68,11 +69,11 @@ public class DocEtiquetaController {
             "\n1. Puede eliminar el campo \"id\": 0"+
             "\n2. Puede dejar el campo con el \"id\": 0"
             , required = true, 
-            content = @Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DocEtiquetaPostDTO.class))
+            content = @Content(schema = @io.swagger.v3.oas.annotations.media.Schema(implementation = DocEtiquetasId.class))
         )
     )
     @PostMapping("/documentos/etiquetas")
-    public DocEtiquetasDTO createDocumentoEtiquetas(@RequestBody DocEtiquetaPostDTO docEtiquetasDTO) {
+    public DocEtiquetasDTO createDocumentoEtiquetas(@RequestBody DocEtiquetasId docEtiquetasDTO) {
         return documentoService.createDocumentoEtiquetas(docEtiquetasDTO);
     }
 
@@ -83,13 +84,13 @@ public class DocEtiquetaController {
         return etiquetaService.getEtiquetasByDocumentoId(documentoId);
     }
 
-    @Operation(summary = "Añadir un documento a una etiqueta", description = "Asocia un documento a una etiqueta específica.")
+    @Operation(summary = "Añadir una etiqueta a un documento", description = "Asocia una etiqueta específica a un documento específico.")
     @PostMapping("/etiquetas/{etiquetaId}/documentos/{documentoId}")
     public EtiquetaDocs addDocumentoToEtiqueta(@PathVariable int etiquetaId, @PathVariable int documentoId) {
         return etiquetaService.addDocumentoToEtiqueta(etiquetaId, documentoId);
     }
 
-    @Operation(summary = "Eliminar un documento de una etiqueta", description = "Elimina un documento asociado a una etiqueta.") 
+    @Operation(summary = "Eliminar una etiqueta de un documento", description = "Elimina un documento asociado a una etiqueta.") 
     @DeleteMapping("/etiquetas/{etiquetaId}/documentos/{documentoId}")
     public void removeDocumentFromEtiqueta(@PathVariable int etiquetaId, @PathVariable int documentoId) {
         etiquetaService.removeDocumentFromEtiqueta(etiquetaId, documentoId);
