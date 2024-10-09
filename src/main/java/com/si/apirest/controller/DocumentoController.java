@@ -55,4 +55,9 @@ public class DocumentoController {
         return documentoService.getDocumentoById(id);
     }
 
+    @GetMapping("/paciente/{idPaciente}/categoria/{idCategoria}")
+    public List<DocEtiquetasDTO> getDocumentosByPacienteAndCategoria(int idPaciente, int idCategoria) {
+        return documentoService.getDocumentosByPacienteAndCategoria(idPaciente, idCategoria);
+    }
+
 }

@@ -4,23 +4,27 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.si.apirest.dto.CategoriaDTO;
 import com.si.apirest.dto.DocEtiquetaPostDTO;
 import com.si.apirest.dto.DocEtiquetasDTO;
 import com.si.apirest.dto.DocEtiquetasId;
 import com.si.apirest.dto.DocumentoDTO;
 import com.si.apirest.dto.EtiquetaReturnDTO;
 import com.si.apirest.dto.PersonDTO;
+import com.si.apirest.entity.Categoria;
 import com.si.apirest.entity.Documento;
 import com.si.apirest.entity.Etiqueta;
 import com.si.apirest.entity.Paciente;
 import com.si.apirest.entity.Person;
 import com.si.apirest.exceptions.NotFoundException;
+import com.si.apirest.repository.CategoriaRepository;
 import com.si.apirest.repository.DocumentoRepository;
 import com.si.apirest.repository.EtiquetaRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -33,6 +37,9 @@ public class DocumentoService {
 
     @Autowired
     private final EtiquetaRepository etiquetaRepository;
+
+    @Autowired 
+    private final CategoriaRepository categoriaRepository;
 
     @Autowired
     private final ModelMapper modelMapper;
@@ -58,6 +65,9 @@ public class DocumentoService {
         Documento documento = createDocumentos(documentoDTO);
         documento.setPerson(modelMapper.map(documentoDTO.getPerson(), Person.class));
         documento.setPaciente(modelMapper.map(documentoDTO.getPaciente(), Paciente.class));
+        CategoriaDTO categoriaDTO = documentoDTO.getCategoria();
+        if (categoriaDTO != null && categoriaRepository.findById(categoriaDTO.getId()).isPresent())
+            documento.setCategoria(modelMapper.map(categoriaDTO, Categoria.class));
         documento = documentoRepository.save(documento);
         return modelMapper.map(documento, DocumentoDTO.class);
     }
@@ -145,6 +155,27 @@ public class DocumentoService {
     }
 
     
+    public List<DocEtiquetasDTO> getDocumentosByPacienteAndCategoria(int idPaciente, int idCategoria) {
+        List<DocEtiquetasDTO> docEtiquetasDTOs = new ArrayList<DocEtiquetasDTO>();
+        List<Documento> documentos = documentoRepository.findByPacienteIdAndCategoriaId(idPaciente, idCategoria);
+        for (Documento documento : documentos) {
+            List<EtiquetaReturnDTO> etiquetas = documento.getEtiquetas()
+            .stream()
+            .map(
+                etiqueta -> modelMapper.map(etiqueta, EtiquetaReturnDTO.class)
+            )
+            .collect(Collectors.toList());
+            DocEtiquetasDTO docEtiquetasDTO = new DocEtiquetasDTO();
+            docEtiquetasDTO.setEtiquetas(etiquetas);
+            docEtiquetasDTO.setId(documento.getId());
+            docEtiquetasDTO.setArchivoUrl(documento.getArchivoUrl());
+            docEtiquetasDTO.setDescripcion(documento.getDescripcion());
+            docEtiquetasDTO.setTitulo(documento.getTitulo());
+            docEtiquetasDTOs.add(docEtiquetasDTO);
+        }
+        return docEtiquetasDTOs;
+    }
+
 
     public Documento createDocumentos(DocumentoDTO documentoDTO) {
         Documento documento = new Documento();

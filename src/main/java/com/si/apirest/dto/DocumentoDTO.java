@@ -31,6 +31,9 @@ public class DocumentoDTO {
     @Schema(implementation = ForeignKey.class)
     private PacienteDTO paciente;
 
+    @Schema(implementation = ForeignKey.class)
+    private CategoriaDTO categoria;
+
     
     
 }

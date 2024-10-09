@@ -44,4 +44,7 @@ public class Documento {
     @JsonIgnore
     private List<Etiqueta> etiquetas;
 
+    @ManyToOne
+    private Categoria categoria;
+
 }
