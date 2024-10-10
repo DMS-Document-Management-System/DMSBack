@@ -56,7 +56,7 @@ public class DocumentoController {
     }
 
     @GetMapping("/paciente/{idPaciente}/categoria/{idCategoria}")
-    public List<DocEtiquetasDTO> getDocumentosByPacienteAndCategoria(int idPaciente, int idCategoria) {
+    public List<DocEtiquetasDTO> getDocumentosByPacienteAndCategoria(@PathVariable int idPaciente, @PathVariable int idCategoria) {
         return documentoService.getDocumentosByPacienteAndCategoria(idPaciente, idCategoria);
     }
 

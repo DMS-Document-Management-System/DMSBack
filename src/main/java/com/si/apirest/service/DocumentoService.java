@@ -116,6 +116,7 @@ public class DocumentoService {
         Documento documento = createDocumentos(docEtiquetasDTO);
         documento.setPaciente(modelMapper.map(docEtiquetasDTO.getPaciente(), Paciente.class));
         documento.setPerson(modelMapper.map(docEtiquetasDTO.getPerson(), Person.class));
+        documento.setCategoria(modelMapper.map(docEtiquetasDTO.getCategoria(), Categoria.class));
         Documento docSaved = documentoRepository.save(documento);
 
         etiquetas.forEach(etiqueta -> {
