@@ -8,6 +8,7 @@ import com.si.apirest.dto.CategoriaDTO;
 import com.si.apirest.dto.DocEtiquetaPostDTO;
 import com.si.apirest.dto.DocEtiquetasDTO;
 import com.si.apirest.dto.DocEtiquetasId;
+import com.si.apirest.dto.DocumentoBase;
 import com.si.apirest.dto.DocumentoDTO;
 import com.si.apirest.dto.EtiquetaReturnDTO;
 import com.si.apirest.dto.PersonDTO;
@@ -68,6 +69,15 @@ public class DocumentoService {
         CategoriaDTO categoriaDTO = documentoDTO.getCategoria();
         if (categoriaDTO != null && categoriaRepository.findById(categoriaDTO.getId()).isPresent())
             documento.setCategoria(modelMapper.map(categoriaDTO, Categoria.class));
+        documento = documentoRepository.save(documento);
+        return modelMapper.map(documento, DocumentoDTO.class);
+    }
+
+    public DocumentoDTO updateDocummDocumentoDTO(int idDocumento, DocumentoBase documentoDTO) {
+        Documento documento = documentoRepository.findById(idDocumento).orElseThrow(()-> new NotFoundException("Documento id: " + idDocumento + " not found."));
+        documento.setDescripcion(documentoDTO.getDescripcion());
+        documento.setTitulo(documentoDTO.getTitulo());
+        documento.setFechaModificacion(new GregorianCalendar());
         documento = documentoRepository.save(documento);
         return modelMapper.map(documento, DocumentoDTO.class);
     }

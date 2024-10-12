@@ -1,11 +1,13 @@
 package com.si.apirest.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.si.apirest.dto.DocEtiquetasDTO;
+import com.si.apirest.dto.DocumentoBase;
 import com.si.apirest.dto.DocumentoDTO;
 import com.si.apirest.service.DocumentoService;
 
@@ -38,6 +40,12 @@ public class DocumentoController {
     )
     public DocumentoDTO createDocumento(@RequestBody DocumentoDTO documentoDTO) {
         return documentoService.createDocumento(documentoDTO);
+    }
+
+    @PutMapping("/{idDocumento}")
+    @Operation(summary = "Editar Documento")
+    public DocumentoDTO updateDocumento(@PathVariable int idDocumento, @RequestBody DocumentoBase documentoDTO) {
+        return documentoService.updateDocummDocumentoDTO(idDocumento, documentoDTO);
     }
 
     @GetMapping
