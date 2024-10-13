@@ -4,9 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.DocumentoDTO;
-import com.si.apirest.dto.PacienteDTO;
-import com.si.apirest.dto.PacienteDocDTO;
+import com.si.apirest.dto.Documento.DocumentoDTO;
+import com.si.apirest.dto.Paciente.PacienteDTO;
+import com.si.apirest.dto.Paciente.PacienteDocDTO;
 import com.si.apirest.entity.Paciente;
 import com.si.apirest.repository.PacienteRepository;
 

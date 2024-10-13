@@ -3,9 +3,9 @@ package com.si.apirest.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.EtiquetaDTO;
-import com.si.apirest.dto.EtiquetaDocs;
-import com.si.apirest.dto.EtiquetaReturnDTO;
+import com.si.apirest.dto.Etiqueta.EtiquetaDTO;
+import com.si.apirest.dto.Etiqueta.EtiquetaDocs;
+import com.si.apirest.dto.Etiqueta.EtiquetaReturnDTO;
 import com.si.apirest.entity.Documento;
 import com.si.apirest.entity.Etiqueta;
 import com.si.apirest.exceptions.NotFoundException;

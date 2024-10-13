@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.PersonDTO;
-import com.si.apirest.dto.PersonDTOupdate;
-import com.si.apirest.dto.PersonGetDTO;
-import com.si.apirest.dto.RolGetDTO;
+import com.si.apirest.dto.Person.PersonDTO;
+import com.si.apirest.dto.Person.PersonDTOupdate;
+import com.si.apirest.dto.Person.PersonGetDTO;
+import com.si.apirest.dto.Rol.RolGetDTO;
 import com.si.apirest.entity.Person;
 import com.si.apirest.entity.RoleEntity;
 import com.si.apirest.exceptions.NotFoundException;

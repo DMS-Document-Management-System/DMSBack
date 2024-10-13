@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.PermissionDTO;
-import com.si.apirest.dto.RolPerDTO;
+import com.si.apirest.dto.Permiso.PermissionDTO;
+import com.si.apirest.dto.Rol.RolPerDTO;
 import com.si.apirest.entity.PermissionEntity;
 import com.si.apirest.entity.Person;
 import com.si.apirest.entity.RoleEntity;

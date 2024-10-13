@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.si.apirest.dto.CategoriaDTO;
+import com.si.apirest.dto.Categoria.CategoriaDTO;
 import com.si.apirest.entity.Categoria;
 import com.si.apirest.service.CategoriaService;
 

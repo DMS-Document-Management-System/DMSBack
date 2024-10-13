@@ -2,9 +2,9 @@ package com.si.apirest.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.si.apirest.dto.DocumentoDTO;
-import com.si.apirest.dto.PacienteDTO;
-import com.si.apirest.dto.PacienteDocDTO;
+import com.si.apirest.dto.Documento.DocumentoDTO;
+import com.si.apirest.dto.Paciente.PacienteDTO;
+import com.si.apirest.dto.Paciente.PacienteDocDTO;
 import com.si.apirest.entity.Paciente;
 import com.si.apirest.service.PacienteService;
 

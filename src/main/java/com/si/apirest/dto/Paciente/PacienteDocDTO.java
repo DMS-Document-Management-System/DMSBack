@@ -1,5 +1,7 @@
-package com.si.apirest.dto;
+package com.si.apirest.dto.Paciente;
 import java.util.List;
+
+import com.si.apirest.dto.Documento.DocumentoDTO;
 
 import lombok.Data;
 

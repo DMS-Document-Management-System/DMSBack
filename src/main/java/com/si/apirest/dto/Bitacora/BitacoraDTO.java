@@ -1,6 +1,8 @@
-package com.si.apirest.dto;
+package com.si.apirest.dto.Bitacora;
 
 import java.util.GregorianCalendar;
+
+import com.si.apirest.dto.Person.PersonDTO;
 
 import lombok.Data;
 

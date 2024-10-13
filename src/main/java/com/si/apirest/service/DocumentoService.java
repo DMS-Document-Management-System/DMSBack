@@ -4,14 +4,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.CategoriaDTO;
-import com.si.apirest.dto.DocEtiquetaPostDTO;
-import com.si.apirest.dto.DocEtiquetasDTO;
-import com.si.apirest.dto.DocEtiquetasId;
-import com.si.apirest.dto.DocumentoBase;
-import com.si.apirest.dto.DocumentoDTO;
-import com.si.apirest.dto.EtiquetaReturnDTO;
-import com.si.apirest.dto.PersonDTO;
+import com.si.apirest.dto.Categoria.CategoriaDTO;
+import com.si.apirest.dto.Documento.DocEtiquetaPostDTO;
+import com.si.apirest.dto.Documento.DocEtiquetasDTO;
+import com.si.apirest.dto.Documento.DocEtiquetasId;
+import com.si.apirest.dto.Documento.DocumentoBase;
+import com.si.apirest.dto.Documento.DocumentoDTO;
+import com.si.apirest.dto.Etiqueta.EtiquetaReturnDTO;
+import com.si.apirest.dto.Person.PersonDTO;
 import com.si.apirest.entity.Categoria;
 import com.si.apirest.entity.Documento;
 import com.si.apirest.entity.Etiqueta;
@@ -21,6 +21,7 @@ import com.si.apirest.exceptions.NotFoundException;
 import com.si.apirest.repository.CategoriaRepository;
 import com.si.apirest.repository.DocumentoRepository;
 import com.si.apirest.repository.EtiquetaRepository;
+import com.si.apirest.repository.PacienteRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,9 @@ public class DocumentoService {
 
     @Autowired 
     private final CategoriaRepository categoriaRepository;
+
+    @Autowired 
+    private final PacienteRepository pacienteRepository;
 
     @Autowired
     private final ModelMapper modelMapper;
@@ -80,6 +84,24 @@ public class DocumentoService {
         documento.setFechaModificacion(new GregorianCalendar());
         documento = documentoRepository.save(documento);
         return modelMapper.map(documento, DocumentoDTO.class);
+    }
+
+    public List<DocumentoDTO> documentosByCategoria(int idCategoria) {
+        categoriaRepository.findById(idCategoria).orElseThrow(()-> new NotFoundException("Categoria id: " + idCategoria + " not found."));
+        List<Documento> documentos = documentoRepository.findByCategoriaId(idCategoria);
+        return documentos.stream().map(documento -> 
+            modelMapper.map(documento, DocumentoDTO.class)
+        )
+        .collect(Collectors.toList());
+    }
+
+    public List<DocumentoDTO> documentosByPaciente(int idPaciente) {
+        pacienteRepository.findById(idPaciente).orElseThrow(()-> new NotFoundException("Paciente id: " + idPaciente + " not found."));
+        List<Documento> documentos = documentoRepository.findByPacienteId(idPaciente);
+        return documentos.stream().map(documento ->
+            modelMapper.map(documento, DocumentoDTO.class)
+        )
+        .collect(Collectors.toList());
     }
 
     public void deleteDocumento(int id) {

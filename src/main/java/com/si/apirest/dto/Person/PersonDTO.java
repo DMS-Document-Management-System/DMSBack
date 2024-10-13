@@ -1,11 +1,10 @@
-package com.si.apirest.dto;
-
+package com.si.apirest.dto.Person;
 
 import lombok.Data;
 
 @Data
-public class PersonGetDTO {
-    
+public class PersonDTO {
+
     private int id;
 
     private String nombre;
@@ -13,7 +12,5 @@ public class PersonGetDTO {
     private String usuario;
 
     private boolean enabled;
-
-    private RolGetDTO role;
 
 }

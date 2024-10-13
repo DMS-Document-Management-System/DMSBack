@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.RolDTO;
-import com.si.apirest.dto.RolGetDTO;
+import com.si.apirest.dto.Rol.RolDTO;
+import com.si.apirest.dto.Rol.RolGetDTO;
 import com.si.apirest.entity.RoleEntity;
 import com.si.apirest.repository.RolRepository;
 

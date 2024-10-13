@@ -1,4 +1,4 @@
-package com.si.apirest.dto;
+package com.si.apirest.dto.Documento;
 
 import lombok.Data;
 

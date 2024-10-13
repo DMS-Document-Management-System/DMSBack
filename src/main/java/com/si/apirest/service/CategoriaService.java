@@ -2,7 +2,7 @@ package com.si.apirest.service;
 
 import org.springframework.stereotype.Service;
 
-import com.si.apirest.dto.CategoriaDTO;
+import com.si.apirest.dto.Categoria.CategoriaDTO;
 import com.si.apirest.entity.Categoria;
 import com.si.apirest.exceptions.NotFoundException;
 import com.si.apirest.repository.CategoriaRepository;

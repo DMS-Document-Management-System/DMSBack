@@ -2,10 +2,10 @@ package com.si.apirest.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.si.apirest.dto.DocEtiquetaPostDTO;
-import com.si.apirest.dto.DocEtiquetasDTO;
-import com.si.apirest.dto.DocEtiquetasId;
-import com.si.apirest.dto.EtiquetaDocs;
+import com.si.apirest.dto.Documento.DocEtiquetaPostDTO;
+import com.si.apirest.dto.Documento.DocEtiquetasDTO;
+import com.si.apirest.dto.Documento.DocEtiquetasId;
+import com.si.apirest.dto.Etiqueta.EtiquetaDocs;
 import com.si.apirest.projection.EtiquetaView;
 import com.si.apirest.service.DocumentoService;
 import com.si.apirest.service.EtiquetaService;

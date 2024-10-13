@@ -1,5 +1,7 @@
-package com.si.apirest.dto;
+package com.si.apirest.dto.Documento;
 
+import com.si.apirest.dto.Paciente.PacienteDTO;
+import com.si.apirest.dto.Person.PersonDTO;
 import com.si.apirest.projection.ForeignKey;
 
 import io.swagger.v3.oas.annotations.media.Schema;

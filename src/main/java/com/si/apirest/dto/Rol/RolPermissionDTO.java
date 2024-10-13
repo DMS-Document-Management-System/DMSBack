@@ -1,4 +1,4 @@
-package com.si.apirest.dto;
+package com.si.apirest.dto.Rol;
 
 import java.util.List;
 
