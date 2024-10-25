@@ -11,7 +11,6 @@ import com.si.apirest.dto.Documento.DocEtiquetasId;
 import com.si.apirest.dto.Documento.DocumentoBase;
 import com.si.apirest.dto.Documento.DocumentoDTO;
 import com.si.apirest.dto.Etiqueta.EtiquetaReturnDTO;
-import com.si.apirest.dto.Person.PersonDTO;
 import com.si.apirest.entity.Categoria;
 import com.si.apirest.entity.Documento;
 import com.si.apirest.entity.Etiqueta;
@@ -49,22 +48,6 @@ public class DocumentoService {
     @Autowired
     private final ModelMapper modelMapper;
 
-    public DocumentoDTO getDocumento(int id) {
-        Documento documento = documentoRepository.findById(id).orElse(null);
-        if (documento == null) {
-          throw new NotFoundException("Document id not found.");
-        }
-        PersonDTO personDTO = modelMapper.map(documento.getPerson(), PersonDTO.class);
-
-        DocumentoDTO documentoDTO = new DocumentoDTO();
-        documentoDTO.setDescripcion(documento.getDescripcion());
-        documentoDTO.setFechaCreacion(documento.getFechaCreacion());
-        documentoDTO.setFechaModificacion(documento.getFechaModificacion());
-        documentoDTO.setPerson(personDTO);
-        documentoDTO.setArchivoUrl(documento.getArchivoUrl());
-        documentoDTO.setId(id);
-        return documentoDTO;
-    }
 
     public DocumentoDTO createDocumento(DocumentoDTO documentoDTO) {
         Documento documento = createDocumentos(documentoDTO);
