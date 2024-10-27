@@ -11,7 +11,6 @@ public class BitacoraFactory {
     public static Bitacora createBitacora(BitacoraDTO bitacoraDTO) {
         ModelMapper modelMapper = new ModelMapper();
         encryptBitacora(bitacoraDTO);
-        System.out.println(bitacoraDTO);
         return modelMapper.map(bitacoraDTO, Bitacora.class);
     }
 

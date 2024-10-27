@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.si.apirest.dto.Bitacora.BitacoraDTO;
 import com.si.apirest.service.BitacoraService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/bitacora")
 @RequiredArgsConstructor
+@Tag(name = "Bitacora")
 public class BitacoraController {
     
     private final BitacoraService bitacoraService;

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.si.apirest.dto.Person.PersonDTO;
 import com.si.apirest.dto.Person.PersonDTOupdate;
 import com.si.apirest.dto.Person.PersonGetDTO;
-import com.si.apirest.dto.Rol.RolGetDTO;
 import com.si.apirest.entity.Person;
 import com.si.apirest.entity.RoleEntity;
 import com.si.apirest.exceptions.NotFoundException;
@@ -93,9 +92,9 @@ public class PersonService {
     }
 
     @Transactional
-    public void setRolUser(int idUser, RolGetDTO rolDto) {
+    public void setRolUser(int idUser, int idRol) {
         Optional<Person> person = personRepository.findById(idUser);
-        Optional<RoleEntity> rol = rolRepository.findById(rolDto.getId());
+        Optional<RoleEntity> rol = rolRepository.findById(idRol);
         if (person.isPresent() && rol.isPresent()){
             person.get().setRole(rol.get());
         }else{

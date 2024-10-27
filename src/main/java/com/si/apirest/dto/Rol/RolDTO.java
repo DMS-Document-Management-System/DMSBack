@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class RolDTO {
-    @NotBlank(message = "No llega esta cosa")
+    @NotBlank(message = "El nombre del rol no debe estar vacío.")
     private String name;
 }
