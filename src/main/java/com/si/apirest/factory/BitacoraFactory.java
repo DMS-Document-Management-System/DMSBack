@@ -23,8 +23,21 @@ public class BitacoraFactory {
 
     public static void encryptBitacora(BitacoraDTO bitacoraDTO) {
         try {
-            bitacoraDTO.setAccion(AESUtil.encriptar(bitacoraDTO.getAccion()));
-            bitacoraDTO.setIp(AESUtil.encriptar(bitacoraDTO.getIp()));
+            if (bitacoraDTO.getAccion() != null)
+                bitacoraDTO.setAccion(AESUtil.encriptar(bitacoraDTO.getAccion()));
+            if (bitacoraDTO.getIp() != null)
+                bitacoraDTO.setIp(AESUtil.encriptar(bitacoraDTO.getIp()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void encryptBitacora(Bitacora bitacora) {
+        try {
+            if (bitacora.getAccion() != null)
+                bitacora.setAccion(AESUtil.encriptar(bitacora.getAccion()));
+            if (bitacora.getIp() != null)
+                bitacora.setIp(AESUtil.encriptar(bitacora.getIp()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,8 +45,10 @@ public class BitacoraFactory {
 
     public static void decryptBitacora(BitacoraDTO bitacoraDTO) {
         try {
-            bitacoraDTO.setAccion(AESUtil.desencriptar(bitacoraDTO.getAccion()));
-            bitacoraDTO.setIp(AESUtil.desencriptar(bitacoraDTO.getIp()));
+            if (bitacoraDTO.getAccion() != null)
+                bitacoraDTO.setAccion(AESUtil.desencriptar(bitacoraDTO.getAccion()));
+            if (bitacoraDTO.getIp() != null)
+                bitacoraDTO.setIp(AESUtil.desencriptar(bitacoraDTO.getIp()));
         } catch (Exception e) {
             e.printStackTrace();
         }

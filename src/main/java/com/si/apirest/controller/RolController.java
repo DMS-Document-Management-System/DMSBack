@@ -7,6 +7,7 @@ import com.si.apirest.dto.Rol.RolDTO;
 import com.si.apirest.dto.Rol.RolGetDTO;
 import com.si.apirest.service.RolService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -28,26 +29,34 @@ public class RolController {
     private final RolService rolService;
 
     @PostMapping
+    @Operation(summary = "Crea un rol")
     public RolGetDTO createRol(@RequestBody RolDTO roleEntity) {
         return rolService.crearRol(roleEntity);
     }
     
     @PutMapping("/{id}")
+    @Operation(summary = "Actualiza un rol a partir de su id")
     public RolGetDTO updateRol(@PathVariable int id, @RequestBody RolDTO rolDTO) {
         return rolService.updateRol(id, rolDTO);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtiene un rol")
     public RolGetDTO getRol(@PathVariable int id) {
         return rolService.getRol(id);
     }
-
+    
     @GetMapping("/page/{pageNumber}")
+    @Operation(summary = "Obtiene todos los roles paginados.", 
+        description = "Enviar número de página como parámetro. \\n" + //
+                        " El rango de valores de páginas es de 0..n"
+    )
     public Page<RolGetDTO> getAllRol(@PathVariable int pageNumber) {
         return rolService.getAllRol(pageNumber);
     }
-
+    
     @DeleteMapping("/{id}")
+    @Operation(summary = "Elimina un rol.")
     public void deleteRol(@PathVariable int id) {
         rolService.deleteRol(id);
     }

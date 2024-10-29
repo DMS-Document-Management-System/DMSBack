@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.si.apirest.dto.Bitacora.BitacoraDTO;
 import com.si.apirest.service.BitacoraService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -28,19 +29,24 @@ public class BitacoraController {
     private final BitacoraService bitacoraService;
 
     @PostMapping
+    @Operation(summary = "Guarda una bitácora.")
     public ResponseEntity<BitacoraDTO> postMethodName(@RequestBody BitacoraDTO bitacoraDTO) {
         BitacoraDTO nuevaBitacoraDTO = bitacoraService.guardarBitacora(bitacoraDTO);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(nuevaBitacoraDTO);
+        .body(nuevaBitacoraDTO);
     }
     
     @GetMapping
+    @Operation(summary = "Obtiene una página de todas las bitacoras", 
+        description = "Enviar número de página como parámetro. \n El rango de valores de páginas es de 0..n"
+    )
     public ResponseEntity<Page<BitacoraDTO>> getAllBitacoras(@RequestParam int pageNumber) {
         Page<BitacoraDTO> bitacoras = bitacoraService.obtenerTodasLasBitacoras(pageNumber);
         return ResponseEntity.ok(bitacoras);
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtiene una bitácora por ID.")
     public ResponseEntity<BitacoraDTO> getBitacoraById(@PathVariable int id) {
         try {
             BitacoraDTO bitacoraDTO = bitacoraService.obtenerBitacoraPorId(id);
