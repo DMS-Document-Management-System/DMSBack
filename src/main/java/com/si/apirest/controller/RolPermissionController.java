@@ -43,7 +43,7 @@ public class RolPermissionController {
         return rolPermissionService.eliminarPermisoDeRol(idRol, idPermiso);
     }
     
-    @GetMapping("/rol/permisos")
+    @GetMapping("/rol/{idRol}/permisos")
     @Operation(summary = "Obtiene todos los permisos de un rol.")
     public List<PermissionEntity> obtenerPermisosDeRol(@PathVariable int idRol) {
         return rolPermissionService.obtenerPermisosDeRol(idRol);
