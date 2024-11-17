@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.si.apirest.dto.Documento.DocEtiquetaPostDTO;
 import com.si.apirest.dto.Documento.DocEtiquetasDTO;
 import com.si.apirest.dto.Documento.DocEtiquetasId;
+import com.si.apirest.dto.Documento.DocumentoDTO;
 import com.si.apirest.dto.Etiqueta.EtiquetaDocs;
 import com.si.apirest.projection.EtiquetaView;
 import com.si.apirest.service.DocumentoService;
@@ -94,6 +95,12 @@ public class DocEtiquetaController {
     @DeleteMapping("/etiquetas/{etiquetaId}/documentos/{documentoId}")
     public void removeDocumentFromEtiqueta(@PathVariable int etiquetaId, @PathVariable int documentoId) {
         etiquetaService.removeDocumentFromEtiqueta(etiquetaId, documentoId);
+    }
+
+    @Operation(summary = "Obtener documentos por etiqueta", description = "Devuelve una lista de documentos asociados a una etiqueta específica.")
+    @GetMapping("/etiquetas/{etiquetaId}/documentos")
+    public List<DocumentoDTO> findDocumentosByEtiqueta(@PathVariable int etiquetaId) {
+        return documentoService.findDocumentosByEtiqueta(etiquetaId);
     }
 
 

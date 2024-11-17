@@ -17,6 +17,7 @@ import com.si.apirest.entity.Etiqueta;
 import com.si.apirest.entity.Paciente;
 import com.si.apirest.entity.Person;
 import com.si.apirest.exceptions.NotFoundException;
+import com.si.apirest.factory.DocumentoFactory;
 import com.si.apirest.repository.CategoriaRepository;
 import com.si.apirest.repository.DocumentoRepository;
 import com.si.apirest.repository.EtiquetaRepository;
@@ -190,6 +191,13 @@ public class DocumentoService {
             docEtiquetasDTOs.add(docEtiquetasDTO);
         }
         return docEtiquetasDTOs;
+    }
+
+    public List<DocumentoDTO> findDocumentosByEtiqueta(int idEtiqueta) {
+        Etiqueta etiqueta = etiquetaRepository.findById(idEtiqueta).orElseThrow(
+            ()-> new NotFoundException("Etiqueta con ID no encontrada."));
+        List<DocumentoDTO> documento = etiqueta.getDocumentos().stream().map(DocumentoFactory::createDocumentoDTO).toList();
+        return documento;
     }
 
 
