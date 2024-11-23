@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
@@ -12,11 +13,14 @@ import lombok.Data;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.hibernate.annotations.Filter;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
 @Data
+@Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
 public class Documento {
 
     @Id
@@ -46,5 +50,9 @@ public class Documento {
 
     @ManyToOne
     private Categoria categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "tenant_id", nullable = true)
+    private Tenant tenant;
 
 }

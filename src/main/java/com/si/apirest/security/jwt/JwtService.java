@@ -36,6 +36,9 @@ public class JwtService {
         claims.put("id", user.getId());
         List<String> permisos = permissionService.userPermissionList(user.getUsuario());
         claims.put("Permisos", permisos);
+        if (user.getTenant() != null) {
+            claims.put("tenant_id", Long.toString(user.getTenant().getId()));
+        }
         return getToken(claims,user);
     }
 
@@ -82,6 +85,12 @@ public class JwtService {
 
     public String getUsernameFromToken(String token) {
         return getClaim(token, Claims::getSubject);
+    }
+
+    public String getTenantIdFromToken(String token) {
+        final Claims claims = getAllClaims(token);
+        String tenantId = claims.get("tenant_id", String.class);
+        return tenantId;
     }
 
     private Date getExpiration(String token) {
