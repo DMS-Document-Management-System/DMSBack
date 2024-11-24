@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.si.apirest.dto.Bitacora.BitacoraDTO;
 import com.si.apirest.entity.Bitacora;
-import com.si.apirest.exceptions.BitacoraNotFoundException;
 import com.si.apirest.factory.BitacoraFactory;
 import com.si.apirest.repository.BitacoraRepository;
 
@@ -34,11 +33,6 @@ public class BitacoraService {
                 bitacoraRepository.save(BitacoraFactory.createBitacora(bitacoraDTO)));
     }
 
-    public BitacoraDTO obtenerBitacoraPorId(int id) {
-        return bitacoraRepository.findById(id)
-                .map(BitacoraFactory::createBitacoraDTO)
-                .orElseThrow(() -> new BitacoraNotFoundException(id));
-    }
 
     public Page<BitacoraDTO> obtenerTodasLasBitacoras(int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber, 10);

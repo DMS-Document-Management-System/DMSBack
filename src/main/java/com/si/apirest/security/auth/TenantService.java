@@ -1,4 +1,5 @@
-package com.si.apirest.service;
+package com.si.apirest.security.auth;
+
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -11,10 +12,11 @@ import com.si.apirest.dto.Tenant.TenantRequest;
 import com.si.apirest.entity.Person;
 import com.si.apirest.entity.RoleEntity;
 import com.si.apirest.entity.Tenant;
-import com.si.apirest.enums.Role;
 import com.si.apirest.factory.TenantFactory;
 import com.si.apirest.repository.PersonRepository;
 import com.si.apirest.repository.TenantRepository;
+import com.si.apirest.service.MailService;
+import com.si.apirest.service.RolPermissionService;
 import com.si.apirest.utils.SubscriptionType;
 import com.si.apirest.utils.TenantStatus;
 
@@ -25,7 +27,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TenantService {
     private final TenantRepository tenantRepository;
-    private final RolService rolService;
     private final PasswordEncoder passwordEncoder;
     private final PersonRepository personRepository;
     private final MailService mailService;
@@ -47,10 +48,7 @@ public class TenantService {
         Tenant tenantSaved = tenantRepository.save(tenant);
 
         // Crear y guardar el Usuario Admin
-        RoleEntity roleEntity = rolService.findRolByName(Role.ADMIN.toString());
-        if (roleEntity == null || roleEntity.getTenant()==null || roleEntity.getTenant().getId() != tenantSaved.getId()) {
-            rolPermissionService.createRolAdmin(tenantSaved);
-        }
+        RoleEntity roleEntity = rolPermissionService.createRolAdmin(tenantSaved);
 
         // Generar credenciales
         String password = generateRandomPassword(12); // Longitud de 12 caracteres

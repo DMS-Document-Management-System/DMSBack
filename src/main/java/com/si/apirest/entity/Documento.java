@@ -2,26 +2,28 @@ package com.si.apirest.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.hibernate.annotations.Filter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.si.apirest.security.util.TenantEntityListener;
 
 
 @Entity
 @Data
-@Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
-public class Documento {
+@EqualsAndHashCode(callSuper=false)
+@EntityListeners(TenantEntityListener.class)
+public class Documento extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,8 +53,5 @@ public class Documento {
     @ManyToOne
     private Categoria categoria;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = true)
-    private Tenant tenant;
 
 }

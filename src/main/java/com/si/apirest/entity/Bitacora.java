@@ -2,8 +2,10 @@ package com.si.apirest.entity;
 
 import java.util.GregorianCalendar;
 
-import org.hibernate.annotations.Filter;
+import com.si.apirest.security.util.TenantEntityListener;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -19,8 +22,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
-@Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
-public class Bitacora {
+@EqualsAndHashCode(callSuper=false)
+@EntityListeners(TenantEntityListener.class)
+public class Bitacora extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,8 +35,5 @@ public class Bitacora {
     private Person user;
     private String ip;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = true)
-    private Tenant tenant;
     
 }

@@ -67,8 +67,12 @@ public class RolPermissionService {
         rol.setName(Role.ADMIN.toString());
         List<PermissionEntity> permissions = permissionRepository.findAll();
         rol.setPermissions(permissions);
-        rol.setTenant(tenant);
+        rol.setTenantId(tenant.getId());
         return rolRepository.save(rol);
+    }
+
+    public List<PermissionEntity> getAllPermission() {
+        return permissionRepository.findAll();
     }
 
 }

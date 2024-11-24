@@ -49,12 +49,23 @@ public class AppInit {
 
     @PostConstruct
     private void postConstruct() {
-        if (permissionRepository.count()==0 && rolRepository.count() == 0){
-            createRoles();
+        if (permissionRepository.count()==0 ){
+            createPermission();
         }
     }
 
-    private void createRoles() {
+	private void createPermission() {
+		Set<PermissionEntity> permissionEntities = new HashSet<PermissionEntity>();
+		List<PermissionEntity> permissionEntitiesSaved = new ArrayList<PermissionEntity>();
+		//Guarda todos los permisos del enum Permission
+		for (String nombre : Permission.getAllPermissionNames()) {
+			permissionEntities.add(PermissionEntity.builder().nombre(nombre).build());
+		}
+		permissionEntitiesSaved = permissionRepository.saveAllAndFlush(permissionEntities);
+	}
+	
+
+/*     private void createRoles() {
         Set<PermissionEntity> permissionEntities = new HashSet<PermissionEntity>();
 			List<PermissionEntity> permissionEntitiesSaved = new ArrayList<PermissionEntity>();
 			//Guarda todos los permisos del enum Permission
@@ -100,5 +111,5 @@ public class AppInit {
 		});
 		
 		personRepository.save(user);
-	}
+	} */
 }

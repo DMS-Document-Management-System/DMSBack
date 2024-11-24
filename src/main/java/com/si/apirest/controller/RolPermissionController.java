@@ -49,4 +49,10 @@ public class RolPermissionController {
         return rolPermissionService.obtenerPermisosDeRol(idRol);
     }
 
+    @GetMapping("/permisos")
+    @Operation(summary = "Obtiene todos los permisos.")
+    public List<PermissionEntity> obtenerPermisosDeRol() {
+        return rolPermissionService.getAllPermission();
+    }
+
 }

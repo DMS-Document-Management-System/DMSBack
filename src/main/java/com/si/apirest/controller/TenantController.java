@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.si.apirest.dto.Tenant.TenantRequest;
-import com.si.apirest.service.TenantService;
+import com.si.apirest.security.auth.TenantService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

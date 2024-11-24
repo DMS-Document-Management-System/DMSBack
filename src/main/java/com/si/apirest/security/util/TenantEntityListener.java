@@ -8,10 +8,12 @@ public class TenantEntityListener {
 
     @PrePersist
     public void setTenantId(BaseEntity entity) {
-        Long tenantId = Long.valueOf(TenantContext.getCurrentTenant());
-        if (tenantId == null) {
-            throw new IllegalStateException("Tenant ID is not set in TenantContext!");
+        if (TenantContext.getCurrentTenant() != null) {
+            Long tenantId = Long.valueOf(TenantContext.getCurrentTenant());
+            if (tenantId == null) {
+                throw new IllegalStateException("Tenant ID is not set in TenantContext!");
+            }
+            entity.setTenantId(tenantId);
         }
-        entity.setTenantId(tenantId);
     }
 }
