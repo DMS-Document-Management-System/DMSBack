@@ -9,5 +9,6 @@ import com.si.apirest.entity.Tenant;
 public interface TenantRepository extends JpaRepository<Tenant, Integer> {
 
     Tenant findByName(String name);
+    Tenant findByEmail(String email);
     
 }

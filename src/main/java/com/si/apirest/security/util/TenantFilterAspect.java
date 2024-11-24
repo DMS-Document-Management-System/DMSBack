@@ -28,6 +28,7 @@ public class TenantFilterAspect {
                 Session session = entityManager.unwrap(Session.class);
                 Filter filter = session.enableFilter("tenantFilter");
                 filter.setParameter("tenantId", tenantIdLong); // Parámetro como Long
+                System.out.println("Se colocó el filtro: " + tenantId);
             } catch (NumberFormatException e) {
                 System.err.println("El tenantId no es un número válido: " + tenantId);
                 throw new IllegalArgumentException("Tenant ID inválido: " + tenantId, e);

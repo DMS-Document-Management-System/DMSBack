@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import com.si.apirest.entity.PermissionEntity;
 import com.si.apirest.entity.RoleEntity;
+import com.si.apirest.entity.Tenant;
+import com.si.apirest.enums.Role;
 import com.si.apirest.exceptions.NotFoundException;
 import com.si.apirest.repository.PermissionRepository;
 import com.si.apirest.repository.RolRepository;
@@ -58,6 +60,15 @@ public class RolPermissionService {
         roleEntity.getPermissions().addAll(permissionEntities);
 
         return roleEntity;
+    }
+
+    public RoleEntity createRolAdmin(Tenant tenant) {
+        RoleEntity rol = new RoleEntity();
+        rol.setName(Role.ADMIN.toString());
+        List<PermissionEntity> permissions = permissionRepository.findAll();
+        rol.setPermissions(permissions);
+        rol.setTenant(tenant);
+        return rolRepository.save(rol);
     }
 
 }

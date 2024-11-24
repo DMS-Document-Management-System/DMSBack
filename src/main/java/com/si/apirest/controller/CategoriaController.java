@@ -51,4 +51,10 @@ public class CategoriaController {
         public ResponseEntity<List<CategoriaDTO>> getCategoriasByPacienteId(@PathVariable int idPaciente) {
             return ResponseEntity.ok(categoriaService.getCategoriaByPaciente(idPaciente));
         }
+
+        @GetMapping("/{id}")
+        public ResponseEntity<CategoriaDTO> getCategoriaById(@PathVariable int id) {
+            return ResponseEntity.ok(categoriaService.getCategoriaById(id));
+        }
+
 }

@@ -23,7 +23,7 @@ public class TenantController {
 
     @PostMapping
     public ResponseEntity<?> saveTenant(@RequestBody @Valid TenantRequest tenant) {
-        tenantService.saveTenant(tenant);
+        tenantService.createNewTenant(tenant);
         return ResponseEntity.ok().build();
     }
 

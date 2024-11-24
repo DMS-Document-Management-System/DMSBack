@@ -60,6 +60,12 @@ public class CategoriaService {
         return categoriaDTO;
     }
 
+    public CategoriaDTO getCategoriaById(int id){
+        Categoria categoria = categoriaRepository.findById(id).orElseThrow(
+            ()-> new NotFoundException("Categoria not found.")
+        );
+        return mapToCategoriaDTO(categoria);
+    }
     
 
 }

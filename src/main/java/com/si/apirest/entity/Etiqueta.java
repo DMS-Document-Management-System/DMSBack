@@ -2,23 +2,24 @@ package com.si.apirest.entity;
 
 import java.util.List;
 
-import org.hibernate.annotations.Filter;
+import com.si.apirest.security.util.TenantEntityListener;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.GenerationType;
 
 @Entity
 @Data
-@Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
-public class Etiqueta {
+@EqualsAndHashCode(callSuper=false)
+@EntityListeners(TenantEntityListener.class)
+public class Etiqueta extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -33,8 +34,5 @@ public class Etiqueta {
     )
     private List<Documento> documentos;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = true)
-    private Tenant tenant;
 
 }

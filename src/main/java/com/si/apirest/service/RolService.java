@@ -57,4 +57,8 @@ public class RolService {
         rolRepository.deleteById(id);
     }
 
+    public RoleEntity findRolByName(String name) {
+        return rolRepository.findByName(name);
+    }
+
 }
