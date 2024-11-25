@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 @Getter
 public enum Permission {
     VER_BITACORA,
-    VER_DEPARTAMENTO,
+    VER_DOCUMENTOS,
     VER_CATEGORIA,
     VER_INVENTARIO,
     VER_ROLES,

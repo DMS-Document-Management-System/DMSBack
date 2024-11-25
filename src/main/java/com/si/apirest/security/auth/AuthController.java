@@ -3,6 +3,7 @@ package com.si.apirest.security.auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class AuthController {
     }
 
     @PostMapping(value = "register")
+    @Operation(deprecated = true)
     public ResponseEntity<AuthResponse> register(@RequestBody @Valid RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }

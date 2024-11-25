@@ -2,6 +2,9 @@ package com.si.apirest.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+
 import com.si.apirest.utils.SubscriptionType;
 import com.si.apirest.utils.TenantStatus;
 
@@ -19,6 +22,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
+@FilterDef(name = "tenantFilter", parameters = @ParamDef(name = "tenantId", type = Long.class))
 public class Tenant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

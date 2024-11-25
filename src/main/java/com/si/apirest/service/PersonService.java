@@ -7,16 +7,21 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.si.apirest.dto.Person.PersonDTO;
 import com.si.apirest.dto.Person.PersonDTOupdate;
 import com.si.apirest.dto.Person.PersonGetDTO;
+import com.si.apirest.dto.Person.PersonRequest;
 import com.si.apirest.entity.Person;
 import com.si.apirest.entity.RoleEntity;
+import com.si.apirest.enums.Role;
 import com.si.apirest.exceptions.NotFoundException;
+import com.si.apirest.factory.PersonFactory;
 import com.si.apirest.repository.PersonRepository;
 import com.si.apirest.repository.RolRepository;
+import com.si.apirest.utils.TenantContext;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +39,17 @@ public class PersonService {
     @Autowired
     private final ModelMapper modelMapper;
 
-    public void createPerson(Person person) {
+    private final PasswordEncoder passwordEncoder;
+
+    public void createPerson(PersonRequest personRequest) {
+        Long tenantId = Long.valueOf(TenantContext.getCurrentTenant());
+        Person person = PersonFactory.toPerson(personRequest);
+        person.setEnabled(true);
+        person.setTenantId(tenantId);
+        person.setContraseña(passwordEncoder.encode(personRequest.getContraseña()));
+        if (person.getRole() == null) {
+            person.setRole(rolRepository.findByName(Role.USER.toString()));
+        }
         personRepository.save(person);
     }
 

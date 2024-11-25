@@ -2,11 +2,14 @@ package com.si.apirest.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.si.apirest.dto.Person.PersonDTO;
+import com.si.apirest.dto.Person.PersonRequest;
 import com.si.apirest.service.PersonService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,6 +41,11 @@ public class PersonController {
     @PutMapping("/{idUser}/rol/{idRol}")
     public void setRolUser(int idUser, int idRol) {
         personService.setRolUser(idUser, idRol);
+    }
+
+    @PostMapping
+    public void createPerson(@RequestBody PersonRequest personDTO) {
+        personService.createPerson(personDTO);
     }
 
 }

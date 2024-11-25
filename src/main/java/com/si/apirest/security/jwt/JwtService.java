@@ -36,8 +36,8 @@ public class JwtService {
         claims.put("id", user.getId());
         List<String> permisos = permissionService.userPermissionList(user.getUsuario());
         claims.put("Permisos", permisos);
-        if (user.getTenant() != null) {
-            claims.put("tenant_id", Long.toString(user.getTenant().getId()));
+        if (user.getTenantId() != null) {
+            claims.put("tenant_id", Long.toString(user.getTenantId()));
         }
         return getToken(claims,user);
     }

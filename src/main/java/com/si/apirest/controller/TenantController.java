@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.si.apirest.dto.Tenant.TenantRequest;
 import com.si.apirest.security.auth.TenantService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,9 @@ public class TenantController {
     private final TenantService tenantService;
 
     @PostMapping
+    @Operation(summary = "Crea un nuevo tenant", 
+        description = "Crea un nuevo tenant y envia credenciales de usuario admin al correo electronico."
+    )
     public ResponseEntity<?> saveTenant(@RequestBody @Valid TenantRequest tenant) {
         tenantService.createNewTenant(tenant);
         return ResponseEntity.ok().build();

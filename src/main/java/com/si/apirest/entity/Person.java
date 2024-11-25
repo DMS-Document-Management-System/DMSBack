@@ -7,9 +7,6 @@ package com.si.apirest.entity;
 import java.util.Collection;
 import java.util.List;
 
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.ParamDef;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +22,7 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -33,9 +31,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario"})})
-@FilterDef(name = "tenantFilter", parameters = @ParamDef(name = "tenantId", type = Long.class))
-@Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
-public class Person implements UserDetails {
+@EqualsAndHashCode(callSuper=false)
+public class Person extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue
     private int id;
@@ -52,9 +49,6 @@ public class Person implements UserDetails {
 
     private boolean enabled;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id", nullable = false) // Este campo debe existir en la base de datos
-    private Tenant tenant;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

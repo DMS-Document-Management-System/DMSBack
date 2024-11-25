@@ -21,7 +21,7 @@ public class OpenApiConfig {
         return new OpenAPI()
             .info(new Info().title("API Documentación con Seguridad")
                             .version("1.0")
-                            .description("API protegida con JWT"))
+                            .description("API protegida con JWT. Para obtener usuario Admin ir a Tenant endpoints."))
             .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
             .components(new io.swagger.v3.oas.models.Components()
                             .addSecuritySchemes("bearerAuth",

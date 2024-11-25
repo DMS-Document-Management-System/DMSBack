@@ -49,6 +49,7 @@ public class TenantService {
 
         // Crear y guardar el Usuario Admin
         RoleEntity roleEntity = rolPermissionService.createRolAdmin(tenantSaved);
+        rolPermissionService.createRolUser(tenantSaved);
 
         // Generar credenciales
         String password = generateRandomPassword(12); // Longitud de 12 caracteres
@@ -56,12 +57,12 @@ public class TenantService {
 
         Person adminUser = Person.builder()
                 .usuario(username)
-                .nombre("Admin del Tenant: " + tenantRequest.getName())
+                .nombre(tenantRequest.getName())
                 .contraseña(passwordEncoder.encode(password))
                 .role(roleEntity)
-                .tenant(tenantSaved)
                 .enabled(true)
                 .build();
+        adminUser.setTenantId(tenantSaved.getId());
         personRepository.save(adminUser);
 
         // Enviar email con credenciales
