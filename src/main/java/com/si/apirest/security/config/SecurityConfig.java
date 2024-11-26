@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.si.apirest.enums.Role;
 import com.si.apirest.security.jwt.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/swagger-config").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/tenant/**").permitAll()
+                        .requestMatchers("/rol/**").hasRole(Role.ADMIN.toString())
+                        .requestMatchers("/permisos/**").hasRole(Role.ADMIN.toString())
                         .anyRequest().authenticated()
                 )
                 .sessionManagement( sessionManager->

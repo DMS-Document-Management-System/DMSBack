@@ -13,7 +13,6 @@ import com.si.apirest.repository.RolRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -76,14 +75,20 @@ public class RolPermissionService {
     public RoleEntity createRolUser(Tenant tenant) {
         RoleEntity rol = new RoleEntity();
         rol.setName(Role.USER.toString());
-        PermissionEntity permissions = permissionRepository.findByNombre(Permission.VER_DOCUMENTOS.toString());
-        List<PermissionEntity> permissionList = new ArrayList<>();
-        permissionList.add(permissions);
-        rol.setPermissions(permissionList);
+        
+        List<PermissionEntity> permissions = getAllPermission();
+        
+        permissions.removeIf(permission -> 
+            permission.getNombre().equals(Permission.VER_BITACORA.toString()) ||
+            permission.getNombre().equals(Permission.VER_ROLES.toString()) ||
+            permission.getNombre().equals(Permission.VER_PERMISOS.toString())
+        );
+        
+        rol.setPermissions(permissions);
         rol.setTenantId(tenant.getId());
         return rolRepository.save(rol);
     }
-
+    
     public List<PermissionEntity> getAllPermission() {
         return permissionRepository.findAll();
     }
