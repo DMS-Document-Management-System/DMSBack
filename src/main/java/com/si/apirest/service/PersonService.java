@@ -48,7 +48,7 @@ public class PersonService {
         person.setTenantId(tenantId);
         person.setContraseña(passwordEncoder.encode(personRequest.getContraseña()));
         if (person.getRole() == null) {
-            person.setRole(rolRepository.findByName(Role.USER.toString()));
+            person.setRole(rolRepository.findByName(Role.ROLE_USER.toString()));
         }
         personRepository.save(person);
     }

@@ -65,7 +65,7 @@ public class RolPermissionService {
 
     public RoleEntity createRolAdmin(Tenant tenant) {
         RoleEntity rol = new RoleEntity();
-        rol.setName(Role.ADMIN.toString());
+        rol.setName(Role.ROLE_ADMIN.toString());
         List<PermissionEntity> permissions = permissionRepository.findAll();
         rol.setPermissions(permissions);
         rol.setTenantId(tenant.getId());
@@ -74,7 +74,7 @@ public class RolPermissionService {
 
     public RoleEntity createRolUser(Tenant tenant) {
         RoleEntity rol = new RoleEntity();
-        rol.setName(Role.USER.toString());
+        rol.setName(Role.ROLE_USER.toString());
         
         List<PermissionEntity> permissions = getAllPermission();
         

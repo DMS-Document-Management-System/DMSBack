@@ -33,8 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/v3/api-docs/swagger-config").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/tenant/**").permitAll()
-                        .requestMatchers("/rol/**").hasRole(Role.ADMIN.toString())
-                        .requestMatchers("/permisos/**").hasRole(Role.ADMIN.toString())
+                        .requestMatchers("/rol/**").hasRole("ADMIN")
+                        .requestMatchers("/permisos/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement( sessionManager->
