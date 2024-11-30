@@ -1,6 +1,8 @@
 package com.si.apirest.security.util;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+
+import java.security.SecureRandom;
 import java.util.Base64;
 
 public class AESUtil {
@@ -23,4 +25,13 @@ public class AESUtil {
         byte[] decryptedData = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
         return new String(decryptedData);
     }
+
+    public static String generateRandomPassword(int length) {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[length];
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes).substring(0, length);
+    }
+
+
 }

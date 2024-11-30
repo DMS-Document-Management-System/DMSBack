@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.si.apirest.dto.Person.PersonDTO;
+import com.si.apirest.dto.Person.PersonMail;
 import com.si.apirest.dto.Person.PersonRequest;
 import com.si.apirest.service.PersonService;
 
@@ -44,7 +45,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public void createPerson(@RequestBody PersonRequest personDTO) {
+    public void createPerson(@RequestBody PersonMail personDTO) {
         personService.createPerson(personDTO);
     }
 

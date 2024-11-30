@@ -3,6 +3,8 @@ package com.si.apirest.security.auth;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.si.apirest.dto.Person.PasswordRequest;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -32,5 +34,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.register(request));
     }
 
+    @PostMapping(value = "updatePassword")
+    public void updatePassword(@RequestBody @Valid PasswordRequest request) {
+        authService.updatePassword(request);
+    }
     
 }

@@ -8,8 +8,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.si.apirest.dto.Person.PasswordRequest;
 import com.si.apirest.entity.Person;
 import com.si.apirest.entity.RoleEntity;
+import com.si.apirest.exceptions.NotFoundException;
 import com.si.apirest.exceptions.PersonExistException;
 import com.si.apirest.repository.PersonRepository;
 import com.si.apirest.security.jwt.JwtService;
@@ -52,6 +54,23 @@ public class AuthService {
         return AuthResponse.builder()
         .token(jwtService.getToken(user))
         .build();
+    }
+
+        public void updatePassword(PasswordRequest passwordRequest) {
+        Optional<Person> optionalPerson = personRepository.findByUsuario(passwordRequest.getUsername());
+        if (optionalPerson.isPresent()) {
+            String oldPassword = optionalPerson.get().getContraseña();
+            String newPassword = passwordEncoder.encode(passwordRequest.getNewPassword());
+            if (passwordEncoder.matches(passwordRequest.getOldPassword(), oldPassword)) {
+                Person updatedUser = optionalPerson.get();
+                updatedUser.setContraseña(newPassword);
+                personRepository.save(updatedUser);
+            }else {
+                throw new NotFoundException("La contraseña actual es incorrecta.");
+            }
+        }else {
+            throw new NotFoundException("Usuario no encontrado.");
+        }
     }
 
 }
