@@ -80,4 +80,8 @@ public class TenantService {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes).substring(0, length);
     }
 
+    public Tenant findByEmail(String email) {
+        return tenantRepository.findByEmail(email);
+    }
+
 }
